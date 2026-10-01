@@ -148,7 +148,7 @@ jobs:
       publish_json: ${{ steps.capture.outputs.publish_json }}
       release_id: ${{ steps.capture.outputs.release_id }}
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
 
@@ -209,7 +209,7 @@ jobs:
               fh.write(f"ref={workflow_sha}\n")
           PY
 
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
         with:
           repository: ${{ steps.clawhub_source.outputs.repository }}
           ref: ${{ steps.clawhub_source.outputs.ref }}
@@ -307,7 +307,7 @@ jobs:
 
       - name: Download prebuilt package artifact
         if: inputs.package_artifact_name != ''
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v5
         with:
           name: ${{ inputs.package_artifact_name }}
           path: ${{ runner.temp }}/prebuilt-package-artifact
@@ -695,7 +695,7 @@ jobs:
 
       - name: Checkout publish source for plugin inspector
         if: steps.resolve_publish.outputs.inspect_checkout_repository != ''
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@v5
         with:
           repository: ${{ steps.resolve_publish.outputs.inspect_checkout_repository }}
           ref: ${{ steps.resolve_publish.outputs.inspect_checkout_ref }}
@@ -727,7 +727,7 @@ jobs:
 
       - name: Upload plugin inspector reports
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ inputs.inspector_artifact_name }}
           path: ${{ runner.temp }}/plugin-inspector
@@ -737,7 +737,7 @@ jobs:
         id: recovery_approval
         if: inputs.trusted_tooling_identity_json != ''
         continue-on-error: true
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v5
         with:
           name: openclaw-clawhub-recovery-approval-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/openclaw-clawhub-recovery-approval
@@ -771,7 +771,7 @@ jobs:
 
       - name: Download release parent authorization receipt
         if: inputs.trusted_tooling_identity_json != ''
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v5
         with:
           name: ${{ steps.parent_authorization.outputs.artifact_name }}
           path: ${{ runner.temp }}/openclaw-clawhub-parent-authorization
@@ -860,7 +860,7 @@ jobs:
           PY
 
       - name: Upload publish JSON artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ inputs.publish_json_artifact_name }}
           path: ${{ runner.temp }}/package-publish.json
