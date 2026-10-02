@@ -21,17 +21,17 @@ jobs:
       CONVEX_URL: ${{ vars.CONVEX_URL || vars.VITE_CONVEX_URL || 'https://wry-manatee-359.convex.cloud' }}
       SKILL_EVALUATION_WORKER_ID: github-actions:${{ github.run_id }}:${{ github.run_attempt }}
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
 
       - uses: ./.github/actions/setup-bun
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v6
         with:
           version: "0.10.11"
 
