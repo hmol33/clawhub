@@ -87,7 +87,7 @@ jobs:
       SNAPSHOT_HARD_MAX_SHARDS_PER_SOURCE: "64"
       SNAPSHOT_HARD_MAX_MATRIX_JOBS: "128"
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
 
       - uses: ./.github/actions/setup-bun
 
@@ -204,7 +204,7 @@ jobs:
       SNAPSHOT_PAGE_TIMEOUT_MS: ${{ inputs['page-timeout-ms'] || '600000' }}
       SANITIZED_OUT_DIR: /tmp/clawhub-security-dataset/shard
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
 
       - uses: ./.github/actions/setup-bun
 
@@ -240,7 +240,7 @@ jobs:
           jq '.manifest.row_counts, .manifest.huggingface_dataset' "$SANITIZED_OUT_DIR/summary.json"
 
       - name: Upload shard artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v5
         with:
           name: security-dataset-shard-${{ matrix.index }}
           path: ${{ env.SNAPSHOT_DIR }}
@@ -266,17 +266,17 @@ jobs:
       SANITIZED_OUT_DIR: /tmp/clawhub-security-dataset/sanitized
       WORK_DIR: /tmp/clawhub-security-dataset
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
 
       - uses: ./.github/actions/setup-bun
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@v6
         if: ${{ env.HF_UPLOAD == 'true' }}
         with:
           python-version: "3.12"
 
       - name: Download sanitized shard artifacts
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v5
         with:
           pattern: security-dataset-shard-*
           path: ${{ env.WORK_DIR }}/shards
@@ -320,7 +320,7 @@ jobs:
 
       - name: Upload sanitized summary artifact
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v5
         with:
           name: security-dataset-summary-${{ github.run_id }}
           path: |
@@ -352,11 +352,11 @@ jobs:
       SOURCE_SHARDS_RUN_ID: ${{ inputs['reuse-shards-run-id'] }}
       WORK_DIR: /tmp/clawhub-security-dataset
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
 
       - uses: ./.github/actions/setup-bun
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@v6
         if: ${{ env.HF_UPLOAD == 'true' }}
         with:
           python-version: "3.12"
@@ -410,7 +410,7 @@ jobs:
 
       - name: Upload sanitized summary artifact
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v5
         with:
           name: security-dataset-summary-${{ github.run_id }}
           path: |

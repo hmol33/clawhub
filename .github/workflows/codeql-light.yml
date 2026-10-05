@@ -82,19 +82,19 @@ jobs:
     steps:
       - name: Checkout
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.profile == 'all' || inputs.profile == matrix.category }}
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v5 # v7.0.1
         with:
           submodules: false
 
       - name: Initialize CodeQL
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.profile == 'all' || inputs.profile == matrix.category }}
-        uses: github/codeql-action/init@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4
+        uses: github/codeql-action/init@v4 # v4
         with:
           languages: ${{ matrix.language }}
           config-file: ${{ matrix.config_file }}
 
       - name: Analyze
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.profile == 'all' || inputs.profile == matrix.category }}
-        uses: github/codeql-action/analyze@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4
+        uses: github/codeql-action/analyze@v4 # v4
         with:
           category: "/codeql-light/${{ matrix.category }}"

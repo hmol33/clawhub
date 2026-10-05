@@ -5,8 +5,10 @@ on:
     - cron: "17 * * * *"
   workflow_dispatch:
 
+# Coalesce recurring syncs before they enter the shared production queue.
 concurrency:
-  group: skills-sh-production-sync
+  group: skills-sh-sync-${{ github.ref }}
+  queue: single
   cancel-in-progress: false
 
 permissions:
@@ -15,6 +17,11 @@ permissions:
 
 jobs:
   sync:
+    # Deploy pauses rollouts; hold its group through sync cleanup and proof upload.
+    concurrency:
+      group: deploy-production
+      queue: max
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 180
     permissions:
@@ -31,7 +38,7 @@ jobs:
             exit 1
           fi
 
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
 
@@ -48,7 +55,7 @@ jobs:
 
       - name: Upload skills.sh synchronization proof
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v5
         with:
           name: skills-sh-sync-${{ github.run_id }}-${{ github.run_attempt }}
           if-no-files-found: error

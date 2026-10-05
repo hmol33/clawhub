@@ -95,7 +95,7 @@ jobs:
     outputs:
       publish_json: ${{ steps.capture.outputs.publish_json }}
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.ref || github.sha }}
 
@@ -152,7 +152,7 @@ jobs:
               fh.write(f"ref={workflow_sha}\n")
           PY
 
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
         with:
           repository: ${{ steps.clawhub_source.outputs.repository }}
           ref: ${{ steps.clawhub_source.outputs.ref }}
@@ -391,7 +391,7 @@ jobs:
           PY
 
       - name: Upload publish JSON artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v5
         if: ${{ always() }}
         with:
           name: clawhub-skill-publish-json

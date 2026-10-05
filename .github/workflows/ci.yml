@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -41,19 +41,19 @@ jobs:
       OPENCLAW_CONTRACT_SHA: f8c0e1b8325b1fc36e039cf357a2c4602f76d5aa
 
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
 
       - uses: ./.github/actions/setup-bun
 
       - name: Check out the pinned OpenClaw contract source
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@v5
         with:
           repository: ${{ env.OPENCLAW_CONTRACT_REPOSITORY }}
           ref: ${{ env.OPENCLAW_CONTRACT_SHA }}
           path: .artifacts/openclaw-contract
 
       - name: Set up OpenClaw Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@v5 # v7.0.0
         with:
           node-version: 24.15.0
 
@@ -74,7 +74,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 2
 
@@ -103,7 +103,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
 
       - uses: ./.github/actions/setup-bun
 
@@ -116,7 +116,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
 
       - uses: ./.github/actions/setup-bun
 
@@ -129,10 +129,10 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
 
       - name: Set up Node.js for CLI compatibility
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@v5 # v7.0.0
         with:
           node-version: 24.15.0
 
@@ -147,12 +147,12 @@ jobs:
     timeout-minutes: 25
 
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
 
       - uses: ./.github/actions/setup-bun
 
       - name: Cache Playwright browsers
-        uses: actions/cache@v6
+        uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('bun.lock') }}
@@ -167,7 +167,7 @@ jobs:
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v5
         with:
           name: playwright-report
           path: playwright-report/
@@ -209,12 +209,12 @@ jobs:
             specs: e2e/local-auth/old-cli-publish-compat.pw.test.ts
 
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
 
       - uses: ./.github/actions/setup-bun
 
       - name: Cache Playwright browsers
-        uses: actions/cache@v6
+        uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('bun.lock') }}
@@ -222,7 +222,7 @@ jobs:
             ${{ runner.os }}-playwright-
 
       - name: Cache npm packages for local Convex external dependencies
-        uses: actions/cache@v6
+        uses: actions/cache@v5
         with:
           path: ~/.npm
           key: ${{ runner.os }}-local-auth-npm-${{ hashFiles('bun.lock', 'convex.json') }}
@@ -268,7 +268,7 @@ jobs:
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v5
         with:
           name: playwright-local-auth-report-${{ matrix.name }}
           path: playwright-report/

@@ -16,13 +16,13 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v5
 
       - name: Test schema-version parser
         run: node --test .github/scripts/catalog-feed-schema-version-guard.test.cjs
 
       - name: Require explicit approval for catalog feed schema bumps
-        uses: actions/github-script@v9
+        uses: actions/github-script@v7
         with:
           script: |
             const {
